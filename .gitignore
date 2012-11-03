@@ -1,0 +1,19 @@
+#
+# 'git ls-files -i --exclude-standard' aufrufen,
+# falls unsicher, ob nach Aenderung zu viel ignoriert wird.
+#
+# Jedes Unterverzeichnis kann auch eine extra .gitignore-Datei
+# beinhalten.
+#
+*~
+*.bak
+Backup
+backup
+*.pdf
+*.class
+bin
+.metadata
+.settings
+.DS_Store
+
+
