@@ -32,12 +32,13 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 if ($userIP == null) {
    die("Try again later.");
 } else {
-   $outStream = "<html><head><title>Current IP Check</title></head><body>Current IP Address: ".$userIP."</body></html>";
-}
+   // Make sure nobody has injected something strange! If so -> die!!!
+   if(!filter_var($userIP, FILTER_VALIDATE_IP)){
+      die("ARRRRGH!");
+   }
 
-// Make sure nobody has injected something strange! If so -> die!!!
-if(!filter_var($userIP, FILTER_VALIDATE_IP)){
-   die("ARRRRGH!");
+   // Everything is fine. Create outStream.
+   $outStream = "<html><head><title>Current IP Check</title></head><body>Current IP Address: ".$userIP."</body></html>";
 }
 
 // Print out result. YEAH ... EPIC SUCCESS!!!
