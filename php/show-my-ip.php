@@ -30,14 +30,14 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 
 // IP Address could not be found. Use mana potion. ... 0.o
 if ($userIP == null) {
-   die("YOU FAIL!!!");
+   die("Try again later.");
 } else {
    $outStream = "<html><head><title>Current IP Check</title></head><body>Current IP Address: ".$userIP."</body></html>";
 }
 
 // Make sure nobody has injected something strange! If so -> die!!!
 if(!filter_var($userIP, FILTER_VALIDATE_IP)){
-   die("DIE SCUM!!!");
+   die("ARRRRGH!");
 }
 
 // Print out result. YEAH ... EPIC SUCCESS!!!
