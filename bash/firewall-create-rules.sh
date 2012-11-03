@@ -25,6 +25,7 @@
 ##              other locations than localhost without using tools like
 ##              Shorewall. Tested with Debian Wheezy (Testing). 
 ## Date:        2012-10-30 
+## Version:     0.2
 ## Licence:     GPLv2 
 ## Credits:     * Markus for the hint to use REJECT instead of DROP
 ##              * http://www.debian-administration.org/articles/445 
@@ -47,6 +48,12 @@ iptables --list
 ip6tables --list
 
 ## Create your IP Tables rules here. --> 
+## INSTRUCTIONS:
+### Make $PORTNUMBER reachable from localhost.
+### ip[6]^*tables -A INPUT -i lo -p tcp --dport $PORTNUMBER -j ACCEPT
+###
+### Make $PORTNUMBER unreachable from outside. If you use DROP instead of REJECT others can see that you closed the port.
+### ip[6]^*tables -A INPUT -p tcp --dport $PORTNUMBER -j REJECT
 
 # 5900/tcp vino-server VNC :0 only available from localhost.
 iptables -A INPUT -i lo -p tcp --dport 5900 -j ACCEPT
