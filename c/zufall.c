@@ -14,17 +14,17 @@ void chance(int);
 int i;
 
 int main () {
-	system("clear");						// unix:clear, win:cls/clrscr();
+	//system("clear");						// unix:clear, win:cls/clrscr();
 	
 	int length;		
 	
-	printf ("Bitte geben sie die Laenge ihres neuen Passworts ein: ");
+	printf ("Bitte gib die Laenge des Passworts ein: ");
 	scanf ("%i", &length);
 	printf ("\n\n");
 	
 
 	
-	printf("Ihr %i Zeichen langer WPA-Pre Shared Key ist: \n", length);
+	printf("Dein %i Zeichen langer WPA-Pre Shared Key ist: \n", length);
 	
 	chance(length);
 	
