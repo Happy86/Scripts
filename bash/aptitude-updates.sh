@@ -48,7 +48,7 @@ echo "\n\n$(apt-show-versions -u)" >> $basepath/$tempfile
 
 if [ $packNumber -gt $maxPack ]; then
    ## Es gibt Updates
-   mail -s "[erdos][aptitude-report] $(date)" $emailAddress < $basepath/$tempfile
+   mail -s "[$(hostname)][aptitude-report] $(date)" $emailAddress < $basepath/$tempfile
 else
    ## Es gibt keine Updates
    # mail -s "[erdos][aptitude-report] $(date)" $emailAddress < $basepath/$tempfile
