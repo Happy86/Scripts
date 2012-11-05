@@ -27,6 +27,16 @@
 ## Licence:     GPLv2 
 
 
+# 1. Get html file and pipe to 'grep' (print lines matching a pattern).
+# 2. Find line with the information which is starting with a unique 
+#    <div> tag and pipe to 'cut'. 
+# 3. Cut everything after the starting <div> tag and pipe that to 'sed' 
+#    (stream editor). 
+# 4. Find the html escape for a whitespace and replace (s or substitude) 
+#    it with a real (non escaped) whitespace throughout the remaining 
+#    (g) string and pipe the rest to cut.
+# 5. Cut out everything except the closing </div> tag. 
+
 curl --silent http://www.selfnet.de/quota/ | grep '<div style="position:relative; z-index:1; font-size:14pt; margin:3px">' | cut -b 72- | sed -e 's/&nbsp;/ /g' | cut -b 1-16
 
 
