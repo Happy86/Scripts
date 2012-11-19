@@ -35,9 +35,12 @@
 # 4. Find the html escape for a whitespace and replace (s or substitude) 
 #    it with a real (non escaped) whitespace throughout the remaining 
 #    (g) string and pipe the rest to cut.
-# 5. Cut out everything except the closing </div> tag. 
+# 5. Reverse the character order so that the closing </div> Tag is at 
+#    the start (>vid/<)
+# 6. Take all characters after the >vid/< (</div) with cut.
+# 7. Reverse the character order so that everything is in order again. :-)  
 
-curl --silent http://www.selfnet.de/quota/ | grep '<div style="position:relative; z-index:1; font-size:14pt; margin:3px">' | cut -b 72- | sed -e 's/&nbsp;/ /g' | cut -b 1-16
+curl --silent http://www.selfnet.de/quota/ | grep '<div style="position:relative; z-index:1; font-size:14pt; margin:3px">' | cut -b 72- | sed -e 's/&nbsp;/ /g' | rev | cut -b 7- | rev
 
 
 
