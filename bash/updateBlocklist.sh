@@ -42,6 +42,7 @@ echo;
 echo; 
 echo "gz und bin Dateien aufgeraeumt. (rm -f *.gz *.bin)"; 
 echo "Siehe $PATH"; 
+echo "BITTE NICHT VERGESSEN DEN transmission-daemon NEU ZU STARTEN!!!"
 echo; 
 
 
