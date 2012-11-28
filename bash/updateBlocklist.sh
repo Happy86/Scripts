@@ -37,10 +37,10 @@ echo;
 echo "Dateien wurden ausgepackt."; 
 echo; 
 
-/bin/rm -f $PATH/*.gz
+/bin/rm -f $PATH/*.gz $PATH/*.bin
 
 echo; 
-echo "Aufgeraeumt. (rm *.gz)"; 
+echo "gz und bin Dateien aufgeraeumt. (rm -f *.gz *.bin)"; 
 echo "Siehe $PATH"; 
 echo; 
 
