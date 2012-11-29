@@ -1,5 +1,12 @@
 #!/bin/bash
 
+##
+## Random URL: http://www.bigbuckbunny.org/index.php/download/
+## 
+## Licence: WTFPL http://sam.zoy.org/wtfpl/COPYING
+## Have fun. 
+## 
+
 wgetpfad=$(which wget); 
 
 ## Wenns im gleichen Verzeichnis landen soll wie das Skript!
