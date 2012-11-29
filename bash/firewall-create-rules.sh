@@ -56,16 +56,16 @@ ip6tables --list
 ### ip[6]^*tables -A INPUT -p tcp --dport $PORTNUMBER -j REJECT
 
 # 5900/tcp vino-server VNC :0 only available from localhost.
-iptables -A INPUT -i lo -p tcp --dport 5900 -j ACCEPT
-iptables -A INPUT -p tcp --dport 5900 -j REJECT
-ip6tables -A INPUT -i lo -p tcp --dport 5900 -j ACCEPT
-ip6tables -A INPUT -p tcp --dport 5900 -j REJECT
+iptables -A INPUT -i lo -p tcp --dport 5900:5901 -j ACCEPT
+iptables -A INPUT -p tcp --dport 5900:5901 -j REJECT
+ip6tables -A INPUT -i lo -p tcp --dport 5900:5901 -j ACCEPT
+ip6tables -A INPUT -p tcp --dport 5900:5901 -j REJECT
 
 # 5800/tcp vino-server vnc-http only available from localhost.
-iptables -A INPUT -i lo -p tcp --dport 5800 -j ACCEPT
-iptables -A INPUT -p tcp --dport 5800 -j REJECT
-ip6tables -A INPUT -i lo -p tcp --dport 5800 -j ACCEPT
-ip6tables -A INPUT -p tcp --dport 5800 -j REJECT
+iptables -A INPUT -i lo -p tcp --dport 5800:5801 -j ACCEPT
+iptables -A INPUT -p tcp --dport 5800:5801 -j REJECT
+ip6tables -A INPUT -i lo -p tcp --dport 5800:5801 -j ACCEPT
+ip6tables -A INPUT -p tcp --dport 5800:5801 -j REJECT
 
 
 ## <-- IP Tables end here. 
