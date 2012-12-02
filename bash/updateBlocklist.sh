@@ -7,7 +7,7 @@
 ## Have fun. 
 ## 
 
-wgetpfad=$(which wget); 
+wgetpfad=$(/usr/bin/which wget); 
 
 ## Wenns im gleichen Verzeichnis landen soll wie das Skript!
 # PATH=$(dirname "$(readlink -e "$0")"); 
