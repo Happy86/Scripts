@@ -67,6 +67,11 @@ iptables -A INPUT -p tcp --dport 5800:5801 -j REJECT
 ip6tables -A INPUT -i lo -p tcp --dport 5800:5801 -j ACCEPT
 ip6tables -A INPUT -p tcp --dport 5800:5801 -j REJECT
 
+# X11 
+iptables -A INPUT -i lo -p tcp --dport 6001 -j ACCEPT
+iptables -A INPUT -p tcp --dport 6001 -j REJECT
+ip6tables -A INPUT -i lo -p tcp --dport 6001 -j ACCEPT
+ip6tables -A INPUT -p tcp --dport 6001 -j REJECT
 
 ## <-- IP Tables end here. 
 
