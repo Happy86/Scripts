@@ -13,12 +13,12 @@ lineOfEndQuery=$(echo "$query" | grep -n "</quota>" | cut -d: -f1);
 # error handling
 isErrorLine=$(echo "$query" | grep -n "<error" | cut -d: -f1);
 
-if [ $(echo $isErrorLine | grep -q '^[0-9]\+$') ]; then
-   errorMsg="    ERROR: "$(echo "$query" | head -n $isErrorLine | tail -n 1 | sed -e 's/<error desc="/ /g' | sed -e 's/" \/>/ /g' | cut -c 3-);
-   echo "$errorMsg";
-   exit 1; 
+## Wenn ein Integer rauskommt gibts nen Fehler. There is an error if there is an integer.
+if [[ $isErrorLine == [0-9]* ]]; then
+      errorMsg="    ERROR: "$(echo "$query" | head -n $isErrorLine | tail -n 1 | sed -e 's/<error desc="/ /g' | sed -e 's/" \/>/ /g' | cut -c 3-);
+      echo "$errorMsg";
+      exit 1; 
 fi
-
 
 # <total />
 totalLineNumber=$(echo "$query" | grep -n "<total" | cut -d: -f1);
