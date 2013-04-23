@@ -10,7 +10,7 @@
 
 # This script prints out information about the CPU utilization for the
 # system, the CPU utilization for the currently working Linux tasks and
-# the memory utilization - all for the working Linux tasts at the moment 
+# the memory utilization - all for the working Linux tasks at the moment 
 # the report is generated.
 # To do this the 'iostat' and the 'pidstat' utilities from the 'sysstat' 
 # package are being used. 
