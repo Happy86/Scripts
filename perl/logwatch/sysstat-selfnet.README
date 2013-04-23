@@ -1,0 +1,10 @@
+Installation:
+1. Install logwatch, sysstat (try 'aptitude install logwatch sysstat' on Debian/Ubuntu
+2. Install the File::Which CPAN Module: 
+2.1 perl -MCPAN -e 'install File::Which' 
+3. Copy sysstat-selfnet.conf to /etc/logwatch/conf/services
+4. Copy sysstat-selfnet to /etc/logwatch/scripts/services 
+5. Put 'Service = sysstat-selfnet' into your /etc/logwatch/logwatch.conf
+
+Have fun! :-) 
+
