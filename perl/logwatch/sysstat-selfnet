@@ -132,6 +132,7 @@ if($@) {
 
 }
 
+exit(0);
 
 # vi: shiftwidth=3 tabstop=3 syntax=perl et
 # Local Variables:
