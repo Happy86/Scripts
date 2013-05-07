@@ -73,6 +73,10 @@ iptables -A INPUT -p tcp --dport 6001 -j REJECT
 ip6tables -A INPUT -i lo -p tcp --dport 6001 -j ACCEPT
 ip6tables -A INPUT -p tcp --dport 6001 -j REJECT
 
+# Allow django dev server
+#iptables -A input -p tcp --dport 8000 -j ACCEPT
+#ip6tables -A input -p tcp --dport 8000 -j ACCEPT
+
 ## <-- IP Tables end here. 
 
 echo ""
