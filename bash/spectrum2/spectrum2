@@ -1,0 +1,65 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          spectrum2
+# Required-Start:    $network $syslog $local_fs
+# Required-Stop:     $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start spectrum2 xmpp transport gateway daemon.
+# Description:       XMPP Transport Daemon (spectrum2) using spectrum2_manager
+### END INIT INFO
+
+# Copyright (C) 2013 Andreas Boesen <andreasb@selfnet.de>
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+# ------------
+# Docs I used / aka Credits:
+# * http://wiki.debian.org/LSBInitScripts
+# * http://www.cyberciti.biz/tips/linux-write-sys-v-init-script-to-start-stop-service.html
+#
+
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/local/lib:/usr/;
+
+WHICH_PATH="/usr/bin/which";
+SPECTRUM2PATH=`$WHICH_PATH spectrum2_manager`;
+
+start() {
+        su -c "$SPECTRUM2PATH start" -;
+        echo
+}
+
+stop() {
+        su -c "$SPECTRUM2PATH stop" -;
+        echo
+}
+
+status() {
+        su -c "$SPECTRUM2PATH status" -;
+        echo
+}
+
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 0
+esac
+exit 0
+
+
+
