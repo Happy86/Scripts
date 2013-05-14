@@ -1,0 +1,6 @@
+
+## (C) by https://github.com/Tilka :P 
+[alias]
+	sup = log --all --graph --pretty=format:'%Cblue%h%C(yellow)%d %Creset%s %Cgreen(%cr) %Cred%an%+b'
+
+
