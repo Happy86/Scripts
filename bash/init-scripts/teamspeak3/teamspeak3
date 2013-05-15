@@ -1,0 +1,56 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          teamspeak3
+# Required-Start:    $network $syslog $local_fs
+# Required-Stop:     $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start Teamspeak3 Server
+# Description:       Start Teamspeak3 Server using the official shell script. 
+### END INIT INFO
+
+
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/local/lib:/usr/;
+
+USER=teamspeak
+DIR=/home/teamspeak/ts3server
+
+start() {
+        su -c "cd $DIR && $DIR/ts3server_startscript.sh start" - $USER;
+        echo
+}
+
+stop() {
+        su -c "cd $DIR && $DIR/ts3server_startscript.sh stop" - $USER;
+        echo
+}
+
+status() {
+        su -c "cd $DIR && $DIR/ts3server_startscript.sh status" - $USER;
+        echo
+}
+
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 0
+esac
+exit 0
+
+
+
