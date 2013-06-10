@@ -16,8 +16,6 @@ numberOfFriendlyInterfaceNames=$(echo $(networksetup -listallnetworkservices | w
 friendlyInterfaceNames=($(networksetup -listallnetworkservices | tail -n $numberOfFriendlyInterfaceNames));
 
 containsElement () {
-   local searchFor;
-
    for element in "${friendlyInterfaceNames[@]}"
    do
       if [ "$element" == "$1" ]
