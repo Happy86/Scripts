@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+## simple wrapper script around 'networksetup' to control SOCKS proxy settings
+
 # networksetup -setsocksfirewallproxy {AirPort|Ethernet} ::1 1080
 # networksetup -setsocksfirewallproxystate {AirPort|Ethernet} on
 
