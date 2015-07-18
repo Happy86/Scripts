@@ -2,7 +2,7 @@
 /*
  * Inspiriert von:   http://checkip.dyndns.org/index.html
  * Ausgabeformat:    <html><head><title>Current IP Check</title></head><body>Current IP Address: 10.x.y.z</body></html>
- * Grund:            Fuer die Kuschelbude gedacht. :P
+ * Grund:            Get to know your IP. :P
  * Lizenzbla/Autor:  Ich stelle dieses PHP Skript unter die WTFPL
  *                   Bei problemen koennt ihr euch auf Google melden.
  *                   (WTFPL) 2012 Happy
