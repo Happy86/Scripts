@@ -1,7 +1,7 @@
 @REM FILENAME:		./network-analyser-windows.cmd
 @REM AUTHOR:		Andreas Boesen <andreas.boesen-AT-selfnet-DOT-de>
 @REM VERSION:		v0.01
-@REM DATE:			2014-24-12
+@REM DATE:			2014-12-24
 @REM DESCRIPTION:	Acquires the network settings, ping/traceroute to
 @REM 				various destinations and echoes the information into
 @REM				a text file.
