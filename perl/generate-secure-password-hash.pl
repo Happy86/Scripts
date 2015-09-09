@@ -4,7 +4,7 @@
 # FILENAME:                 generate-secure-password-hash.pl
 # REIMPLEMENTATION FROM:    http://techbl.org/?p=59
 # LICENSE:                  WTFPLv2
-# DATE:                     2015-08-07
+# DATE:                     2015-09-09
 
 # This work is free. You can redistribute it and/or modify it under the
 # terms of the Do What The Fuck You Want To Public License, Version 2,
