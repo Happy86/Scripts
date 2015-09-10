@@ -20,6 +20,7 @@
 #  ** cpan install Term::ReadKey
 
 # CHANGELOG:
+# * 2015-09-10 - translate all the comments
 # * 2015-08-20 - fix: remove trailing \n (s/\n//g) from password (before the password including \n was also hashed)
 # * 2015-08-18 - initial release
 
@@ -30,17 +31,17 @@ use strict;
 use Term::ReadKey;
 
 
-ReadMode('noecho');             # Konsoleneingaben unsichtbar machen!
+ReadMode('noecho');             # Make console input invisible!
 print ("Password: ");
-my ($password) = ReadLine(0);   # Password einlesen.
-$password =~ s/\n//g;           # Newline am Ende des Passworts entfernen.
+my ($password) = ReadLine(0);   # Read in the password.
+$password =~ s/\n//g;           # Remove the newline from the end of the password.
 print ("\n");
 
 $password = '{CRYPT}'.crypt($password,"\$6\$".function_generate_salt()."\$");
 print ($password);
 print ("\n");
 
-ReadMode('normal');             # Konsoleneingaben wieder sichtbar machen!
+ReadMode('normal');             # Make console input visible again!
 
 
 # Function: Generate salt string (16 characters)
