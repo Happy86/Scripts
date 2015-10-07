@@ -25,24 +25,32 @@
 
 @echo _ >> selfnet-debug-information.txt
 @echo ## ipconfig /all >> selfnet-debug-information.txt
-@echo Test 1/7
+@echo Test 1/8
 ipconfig /all >> selfnet-debug-information.txt
+
+
+@echo _ >> selfnet-debug-information.txt
+@echo _ >> selfnet-debug-information.txt
+@echo ## route print >> selfnet-debug-information.txt
+@echo Test 2/8
+route print >> selfnet-debug-information.txt
+
 
 @echo _ >> selfnet-debug-information.txt
 @echo _ >> selfnet-debug-information.txt
 @echo ## PING >> selfnet-debug-information.txt
 @echo # ping 8.8.8.8 >> selfnet-debug-information.txt
-@echo Test 2/7
+@echo Test 3/8
 ping 8.8.8.8 >> selfnet-debug-information.txt
 
 @echo _ >> selfnet-debug-information.txt
 @echo # ping www.selfnet.de >> selfnet-debug-information.txt
-@echo Test 3/7
+@echo Test 4/8
 ping www.selfnet.de >> selfnet-debug-information.txt
 
 @echo _>> selfnet-debug-information.txt
 @echo # ping www.heise.de >> selfnet-debug-information.txt
-@echo Test 4/7
+@echo Test 5/8
 ping www.heise.de >> selfnet-debug-information.txt
 
 
@@ -50,16 +58,16 @@ ping www.heise.de >> selfnet-debug-information.txt
 @echo _ >> selfnet-debug-information.txt
 @echo ## tracert (traceroute) >> selfnet-debug-information.txt
 @echo # traceroute 8.8.8.8 >> selfnet-debug-information.txt
-@echo Test 5/7
+@echo Test 6/8
 tracert 8.8.8.8 >> selfnet-debug-information.txt
 
 @echo _ >> selfnet-debug-information.txt
 @echo # tracert www.selfnet.de >> selfnet-debug-information.txt
-@echo Test 6/7
+@echo Test 7/8
 tracert www.selfnet.de >> selfnet-debug-information.txt
 
 @echo _ >> selfnet-debug-information.txt
 @echo # tracert www.heise.de >> selfnet-debug-information.txt
-@echo Test 7/7
+@echo Test 8/8
 tracert www.heise.de >> selfnet-debug-information.txt
 
