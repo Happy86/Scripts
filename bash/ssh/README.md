@@ -6,8 +6,9 @@
    3. ~/.ssh/config-and-keys/config.d/
 2. Store all your ssh-keys (public AND private) in ~/.ssh/config-and-keys/keys/
 3. Store all your ssh config files in ~/.ssh/config-and-keys/config.d/ (config-work, config-private, ...).
-4. Run ./config.d-create-symlinks.sh - it will create the necessary symlinks to your ~/.ssh/ folder.
-5. Run ./config.d-gen.sh - it will create your single ~/.ssh/config file SSH can handle.
+4. Save config.d-create-symlinks.sh and config.d-gen.sh to ~/.ssh/config-and-keys/
+5. Run ./config.d-create-symlinks.sh - it will create the necessary symlinks to your ~/.ssh/ folder.
+6. Run ./config.d-gen.sh - it will create your single ~/.ssh/config file SSH can handle.
 
 
 ## config.d-create-symlinks.sh
