@@ -12,6 +12,8 @@
 
 **Run *./config.d-create-symlinks.sh* every time you add a new key and *./config.d-gen.sh* everyi time you change one of your SSH config files**
 
+You can now init a git repository in ~/.ssh/config-and-keys and push it to a **trusted** location (preferably using SSH) for backup and deployment to all your machines.
+
 ## config.d-create-symlinks.sh
 
 Create symlinks to the contents of the keys/ folder (~/.ssh/), the config.d-gen.sh script and and the config.d directory; and make sure all files have the right file permissions.
