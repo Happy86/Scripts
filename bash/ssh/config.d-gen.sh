@@ -23,7 +23,7 @@ then
 fi
 
 # Check if there are config files.
-NUMBEROFCONFFILES="$( ls config.d/ | wc -w )";
+NUMBEROFCONFFILES="$( ls ~/.ssh/config.d/ | wc -w )";
 if [ $NUMBEROFCONFFILES -eq 0 ]
 then
     echo "ERROR: There are no config files in the ~/.ssh/config.d directory!";
