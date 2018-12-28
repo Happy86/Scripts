@@ -10,7 +10,7 @@
 # USAGE:        ./c3subt-vid2audio.sh 00:18 41:25 35c3-9599-eng-deu-Locked_up_science_hd.mp4
 #               ./c3subt-vid2audio.sh startcut endcut video-file.mp4
 
-# Copyright © 2015 Andreas Boesen <andreas.boesen-AT-selfnet-NOSPAM-dot-de>
+# Copyright © 2018 Andreas Boesen <andreas.boesen-AT-selfnet-NOSPAM-dot-de>
 # This work is free. You can redistribute it and/or modify it under the
 # terms of the Do What The Fuck You Want To Public License, Version 2,
 # as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
