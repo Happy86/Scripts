@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# FILENAME:     config.d-gen.sh
+# FILENAME:     c3subt-vid2audio.sh
 # AUTHOR:       Andreas Boesen <andreas.boesen-AT-selfnet-NOSPAM-dot-de>
 # DESCRIPTION:  Put in Congress mp4 files and get m4a audio containers you
 #               can throw at a transcription tool. Also it cuts away to your
