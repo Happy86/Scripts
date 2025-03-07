@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # FILENAME:    ~/bin/brew-update.sh
-# VERSION:     2025-02-28_14-10
+# VERSION:     2025-03-07_13-45
 # LICENSE:     WTFPL
-# DESCRIPTION: Add script that "properly" Updates libreoffice with brew/mac without
+# DESCRIPTION: Script that "properly" Updates libreoffice with brew/mac without
 #              breaking the libreoffice-language-pack.
 #              Yes. This is a bodge!
 #              The proper/sane solution is to use a proper Linux distribution with
@@ -29,8 +29,8 @@ then
       echo "==> Prüfe ob es Updates für Libreoffice gibt ...";
 
 
-      LIBREOFFICE_AVAILABLE_VERSION=$(brew outdated --casks --json | jq .casks | jq '.[] | select(.name=="libreoffice")' | jq .current_version | tr -d '"');
-      LIBREOFFICE_LANGPACK_AVAILABLE_VERSION=$(brew outdated --casks --json | jq .casks | jq '.[] | select(.name=="libreoffice-language-pack")' | jq .current_version | tr -d '"');
+      LIBREOFFICE_AVAILABLE_VERSION=$(brew outdated --casks --greedy --json | jq .casks | jq '.[] | select(.name=="libreoffice")' | jq .current_version | tr -d '"');
+      LIBREOFFICE_LANGPACK_AVAILABLE_VERSION=$(brew outdated --casks --greedy --json | jq .casks | jq '.[] | select(.name=="libreoffice-language-pack")' | jq .current_version | tr -d '"');
 
       if [[ ${LIBREOFFICE_AVAILABLE_VERSION} == ${LIBREOFFICE_LANGPACK_AVAILABLE_VERSION} ]]
       then
@@ -107,5 +107,5 @@ echo "";
 
 
 echo "==> Aktualisiere brew casks (nur halt NICHT libreoffice):";
-echo " brew outdated --cask | grep -v libreoffice | xargs brew upgrade --casks --greedy --force";
-brew outdated --cask | grep -v libreoffice | xargs brew upgrade --casks --greedy --force
+echo " brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force";
+brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force
