@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # FILENAME:    ~/bin/brew-update.sh
-# VERSION:     2025-04-23_14-40
+# VERSION:     2025-04-24_15-25
 # LICENSE:     WTFPL
 # DESCRIPTION: Script that "properly" Updates libreoffice with brew/mac without
 #              breaking the libreoffice-language-pack.
@@ -9,6 +9,23 @@
 #              The proper/sane solution is to use a proper Linux distribution with
 #              a proper package manager like Debian with dpkg/apt and not use shitty/
 #              proprietary operating systems. ;-)
+# CHANGELOG:
+#  * 2025-04-24_15-25: refactoring comments/output, add changelog
+#    * refactor comments and output to only use english
+#    * add this changelog
+#
+#  * 2025-04-23_14-40: re-add libreoffice to dock if it was there before updating
+#    * install dockutil with brew as dependency if not already installed
+#    * find out if libreoffice is in the dock and if so note the position
+#    * if libreoffice is uninstalled/reinstalled for the update and it was
+#      in the dock previously it will be re-added at the correct position
+#      in the dock where it was before
+#    * minor refactoring: quote vars to prevent globbing
+#
+#  * 2025-03-07_13-45: minor bugfixes (include --greedy for casks)
+#
+#  * 2025-02-28_14-10: initial release
+#
 
 set -uo pipefail;
 
@@ -45,8 +62,8 @@ then
 
     if [[ "${IS_INSTALLED_LIBREOFFICE_LANGPACK}" -ne 0 ]]
     then
-      # LibreOffice UND Sprachpaket sind installiert.
-      echo "==> Prüfe ob es Updates für Libreoffice gibt ...";
+      # LibreOffice AND language pack are installed.
+      echo "==> Checking if there are updates available for LibreOffice ...";
 
 
       LIBREOFFICE_AVAILABLE_VERSION=$(brew outdated --casks --greedy --json | jq .casks | jq '.[] | select(.name=="libreoffice")' | jq .current_version | tr -d '"');
@@ -54,7 +71,7 @@ then
 
       if [[ "${LIBREOFFICE_AVAILABLE_VERSION}" == "${LIBREOFFICE_LANGPACK_AVAILABLE_VERSION}" ]]
       then
-        echo "==> Es gibt ein LibreOffice Update. :-)";
+        echo "==> A LibreOffice update is available. :-)";
 
         # deinstallieren
         echo " brew uninstall --cask libreoffice";
@@ -70,25 +87,27 @@ then
 
         if [ -d /Applications/LibreOffice.app ];
         then
-          ## Prüfen ob der Index vom Betriebssystem LibreOffice schon gesehen hat. Wenn nicht warten und wieder versuchen.
-          ## So lange der Index vom Betriebssystem /Applications/LibreOffice.app noch nicht kennt kann das Sprachpaket NICHT installiert werden!
+          ## Check if the operating system's index (Spotlight?) has already added LibreOffice. If not sleep for a second and try again.
+          ## As long as the OS's index does not contain /Applications/LibreOffice.app yet the language pack can NOT be installed silently/automatically!
           echo " ... please wait";
+          # shellcheck disable=SC2046
           while [ $(mdfind "kMDItemContentType == 'com.apple.application-bundle' && kMDItemFSName == 'LibreOffice.app'" -onlyin '/Applications' | wc -l) -eq 0 ];
           do
+            # shellcheck disable=SC2034
             TEMP=$(ls /Applications/LibreOffice.app 2>&- || true);
-            echo " -> Bitte warten bis Macintosh das /Applications/LibreOffice.app Verzeichnis indiziert hat! ...";
-            echo "    Schlafe 1 Sekunde";
+            echo " -> Please wait for Macintosh until it has indexed the /Applications/LibreOffice.app directory! ...";
+            echo "    Sleeping 1 second.";
             echo "";
             sleep 1;
           done;
 
-          ## Sprachpaket installieren
+          ## Install language pack for LibreOffice
           echo " brew install --cask --no-quarantine libreoffice-language-pack";
           brew install --cask --no-quarantine libreoffice-language-pack;
 
         else
-          echo "FEHLER: Leider liegt LibreOffice nicht im Dateisystem unter /Applications/LibreOffice.app";
-          echo "        Dementsprechend kann auch KEIN Sprachpaket installiert werden!!!";
+          echo "ERROR: Unfortunately LibreOffice cannot be found in the file system at the path /Applications/LibreOffice.app";
+          echo "       Therefore a language pack can NOT be installed!!!";
         fi
 
         echo " xattr -crv /Applications/LibreOffice.app";
@@ -104,17 +123,16 @@ then
         fi
 
       else
-        echo "==> WARNUNG: Leider liegen libreoffice und libreoffice-language-pack noch NICHT in der selben Version vor.";
-        echo "             Einfach nochmal einen Tag warten und dann kann LibreOffice inkl. Sprachpaket sicher aktualisiert werden. :-)";
+        echo "==> WARNING: Unfortunately the libreoffice and libreoffice-language-pack packages are NOT available with the same version in the Homebrew repository.";
+        echo "             Please do try again tomorrow or the day after and then surely LibreOffice can be updated including the language pack. :-)";
         echo "             libreoffice -> ${LIBREOFFICE_AVAILABLE_VERSION} / libreoffice-language-pack -> ${LIBREOFFICE_LANGPACK_AVAILABLE_VERSION}";
       fi
     else
-      # NUR LibreOffice ist installiert.
+      # ONLY LibreOffice has been installed. 
       echo "  brew upgrade --cask libreoffice";
       brew upgrade --cask libreoffice;
 
       echo " xattr -crv /Applications/LibreOffice.app";
-
       xattr -crv /Applications/LibreOffice.app;
       echo "";
 
@@ -127,14 +145,14 @@ then
       fi
     fi
   else
-    echo "==> Es gibt kein Update für LibreOffice.";
+    echo "==> There is no update for LibreOffice.";
     echo "";
   fi
 fi
 echo "";
 
 
-echo "==> Update und installiere etwaige Updates für brew und durch brew installierte Kommandozeilensoftware:";
+echo "==> Updating and installing available updates for brew itself and all cli utilities you installed through it:";
 echo " brew update"
 brew update
 echo "";
@@ -144,6 +162,8 @@ echo "";
 echo "";
 
 
-echo "==> Aktualisiere brew casks (nur halt NICHT libreoffice):";
+echo "==> Updating brew casks (but NOT libreoffice):";
 echo " brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force";
 brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force
+
+
