@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # FILENAME:    ~/bin/brew-update.sh
-# VERSION:     2025-03-07_13-45
+# VERSION:     2025-04-23_14-40
 # LICENSE:     WTFPL
 # DESCRIPTION: Script that "properly" Updates libreoffice with brew/mac without
 #              breaking the libreoffice-language-pack.
@@ -13,6 +13,26 @@
 set -uo pipefail;
 
 sudo -v;
+
+# find out if docutil is installed
+IS_INSTALLED_DOCKUTIL=$(brew list | grep -c 'dockutil');
+if [[ "${IS_INSTALLED_DOCKUTIL}" -eq 0 ]]
+then
+  echo " brew install dockutil";
+  brew install dockutil;
+  echo "";
+fi
+
+# check if LibreOffice has been placed in the dock and at which position
+echo " dockutil --find \"LibreOffice\" # Checking if LibreOffice is in the Dock.";
+dockutil --find "LibreOffice";
+FOUND_LIBREOFFICE_IN_DOCK=${?};
+if [[ "${FOUND_LIBREOFFICE_IN_DOCK}" -eq 0 ]]
+then
+  POSITION_OF_LIBREOFFICE_IN_DOCK=$(dockutil --find "LibreOffice" | awk -F 'slot ' '{print $2}' | awk -F ' in' '{print $1}');
+  echo "";
+fi
+
 
 IS_INSTALLED_LIBREOFFICE=$(brew list --casks | grep -c 'libreoffice');
 IS_INSTALLED_LIBREOFFICE_LANGPACK=$(brew list --casks | grep -c 'libreoffice-language-pack');
@@ -32,7 +52,7 @@ then
       LIBREOFFICE_AVAILABLE_VERSION=$(brew outdated --casks --greedy --json | jq .casks | jq '.[] | select(.name=="libreoffice")' | jq .current_version | tr -d '"');
       LIBREOFFICE_LANGPACK_AVAILABLE_VERSION=$(brew outdated --casks --greedy --json | jq .casks | jq '.[] | select(.name=="libreoffice-language-pack")' | jq .current_version | tr -d '"');
 
-      if [[ ${LIBREOFFICE_AVAILABLE_VERSION} == ${LIBREOFFICE_LANGPACK_AVAILABLE_VERSION} ]]
+      if [[ "${LIBREOFFICE_AVAILABLE_VERSION}" == "${LIBREOFFICE_LANGPACK_AVAILABLE_VERSION}" ]]
       then
         echo "==> Es gibt ein LibreOffice Update. :-)";
 
@@ -73,8 +93,16 @@ then
 
         echo " xattr -crv /Applications/LibreOffice.app";
         xattr -crv /Applications/LibreOffice.app;
-
         echo "";
+
+        if [[ "${FOUND_LIBREOFFICE_IN_DOCK}" -eq 0 ]]
+        then
+          echo "";
+          echo " dockutil --add /Applications/LibreOffice.app --position ${POSITION_OF_LIBREOFFICE_IN_DOCK} --restart";
+          dockutil --add /Applications/LibreOffice.app --position "${POSITION_OF_LIBREOFFICE_IN_DOCK}" --restart;
+          echo "";
+        fi
+
       else
         echo "==> WARNUNG: Leider liegen libreoffice und libreoffice-language-pack noch NICHT in der selben Version vor.";
         echo "             Einfach nochmal einen Tag warten und dann kann LibreOffice inkl. Sprachpaket sicher aktualisiert werden. :-)";
@@ -84,9 +112,19 @@ then
       # NUR LibreOffice ist installiert.
       echo "  brew upgrade --cask libreoffice";
       brew upgrade --cask libreoffice;
+
       echo " xattr -crv /Applications/LibreOffice.app";
+
       xattr -crv /Applications/LibreOffice.app;
       echo "";
+
+      if [[ "${FOUND_LIBREOFFICE_IN_DOCK}" -eq 0 ]]
+      then
+        echo "";
+        echo " dockutil --add /Applications/LibreOffice.app --position ${POSITION_OF_LIBREOFFICE_IN_DOCK} --restart";
+        dockutil --add /Applications/LibreOffice.app --position "${POSITION_OF_LIBREOFFICE_IN_DOCK}" --restart;
+        echo "";
+      fi
     fi
   else
     echo "==> Es gibt kein Update für LibreOffice.";
