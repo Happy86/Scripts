@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # FILENAME:    ~/bin/brew-update.sh
-# VERSION:     2025-04-24_15-25
+# VERSION:     2025-08-23_21-25
 # LICENSE:     WTFPL
 # DESCRIPTION: Script that "properly" Updates libreoffice with brew/mac without
 #              breaking the libreoffice-language-pack.
@@ -10,6 +10,10 @@
 #              a proper package manager like Debian with dpkg/apt and not use shitty/
 #              proprietary operating systems. ;-)
 # CHANGELOG:
+#  * 2025-08-23_21-25: Adding policies.json to thunderbird and firefox
+#                      (if installed) to stop self-update antipattern
+#                      (which usually breaks your profile).
+#
 #  * 2025-04-24_15-25: refactoring comments/output, add changelog
 #    * refactor comments and output to only use english
 #    * add this changelog
@@ -165,5 +169,40 @@ echo "";
 echo "==> Updating brew casks (but NOT libreoffice):";
 echo " brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force";
 brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force
+
+echo "";
+echo "";
+
+# Make sure Mozilla can't brake your profile for Thunderbird and Firefox because of user hostile (backwards incompatible) update policies.
+if [ -d  /Applications/Thunderbird.app ];
+then
+  mkdir -p  /Applications/Thunderbird.app/Contents/Resources/distribution;
+  cat > /Applications/Thunderbird.app/Contents/Resources/distribution/policies.json << EOF
+{
+  "policies": {
+    "DisableAppUpdate": true
+  }
+}
+EOF
+  echo "-- Added no selfupdate policy to Thunderbird."
+fi
+
+if [ -d  /Applications/Firefox.app ];
+then
+  mkdir -p  /Applications/Firefox.app/Contents/Resources/distribution;
+  cat > /Applications/Firefox.app/Contents/Resources/distribution/policies.json << EOF
+{
+  "policies": {
+    "DisableAppUpdate": true
+  }
+}
+EOF
+  echo "-- Added no selfupdate policy to Firefox."
+fi
+
+echo "";
+echo "";
+
+
 
 
