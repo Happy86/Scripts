@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # FILENAME:    ~/bin/brew-update.sh
-# VERSION:     2025-08-23_21-25
+# VERSION:     2025-12-08_13-00
 # LICENSE:     WTFPL
 # DESCRIPTION: Script that "properly" Updates libreoffice with brew/mac without
 #              breaking the libreoffice-language-pack.
@@ -10,9 +10,10 @@
 #              a proper package manager like Debian with dpkg/apt and not use shitty/
 #              proprietary operating systems. ;-)
 # CHANGELOG:
-#  * 2025-08-23_21-25: Adding policies.json to thunderbird and firefox
-#                      (if installed) to stop self-update antipattern
-#                      (which usually breaks your profile).
+#  * 2025-12-08_13-00: refactoring dependency fix, fix deprecation and add additional check
+#    * fix libreoffice update (dependency fix and --no-quarantine deprecation)
+#    * check if firefox/thunderbird is installed through brew (only then stop
+#      the self-update)
 #
 #  * 2025-04-24_15-25: refactoring comments/output, add changelog
 #    * refactor comments and output to only use english
@@ -77,17 +78,18 @@ then
       then
         echo "==> A LibreOffice update is available. :-)";
 
-        # deinstallieren
-        echo " brew uninstall --cask libreoffice";
-        brew uninstall --cask libreoffice;
-
+        # uninstall libreoffice (first the language pack because of dependencies
         echo " brew uninstall --cask libreoffice-language-pack";
         brew uninstall --cask libreoffice-language-pack;
 
+        echo " brew uninstall --cask libreoffice";
+        brew uninstall --cask libreoffice;
+
+
         # installieren
         ## LibreOffice installieren
-        echo " brew install --cask --no-quarantine libreoffice";
-        brew install --cask --no-quarantine libreoffice;
+        echo " brew install --cask libreoffice";
+        brew install --cask libreoffice;
 
         if [ -d /Applications/LibreOffice.app ];
         then
@@ -99,6 +101,8 @@ then
           do
             # shellcheck disable=SC2034
             TEMP=$(ls /Applications/LibreOffice.app 2>&- || true);
+            echo " xattr -crv /Applications/LibreOffice.app";
+            xattr -crv /Applications/LibreOffice.app;
             echo " -> Please wait for Macintosh until it has indexed the /Applications/LibreOffice.app directory! ...";
             echo "    Sleeping 1 second.";
             echo "";
@@ -106,8 +110,8 @@ then
           done;
 
           ## Install language pack for LibreOffice
-          echo " brew install --cask --no-quarantine libreoffice-language-pack";
-          brew install --cask --no-quarantine libreoffice-language-pack;
+          echo " brew install --cask libreoffice-language-pack";
+          brew install --cask libreoffice-language-pack;
 
         else
           echo "ERROR: Unfortunately LibreOffice cannot be found in the file system at the path /Applications/LibreOffice.app";
@@ -170,39 +174,47 @@ echo "==> Updating brew casks (but NOT libreoffice):";
 echo " brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force";
 brew outdated --casks --greedy | grep -v libreoffice | xargs brew upgrade --casks --greedy --force
 
-echo "";
-echo "";
 
-# Make sure Mozilla can't brake your profile for Thunderbird and Firefox because of user hostile (backwards incompatible) update policies.
-if [ -d  /Applications/Thunderbird.app ];
+if [[ -d  /Applications/Thunderbird.app ]];
 then
-  mkdir -p  /Applications/Thunderbird.app/Contents/Resources/distribution;
-  cat > /Applications/Thunderbird.app/Contents/Resources/distribution/policies.json << EOF
+  # Check if Software is also installed through brew when disableing self-update function.
+  # shellcheck disable=SC2034
+  IS_TB_INSTALLED=$(brew list --casks | grep thunderbird);
+  IS_TB_INSTALLED_RC=$?;
+  if [[ ${IS_TB_INSTALLED_RC} -eq 0 ]];
+  then
+    mkdir -p  /Applications/Thunderbird.app/Contents/Resources/distribution;
+    cat > /Applications/Thunderbird.app/Contents/Resources/distribution/policies.json << EOF
 {
   "policies": {
     "DisableAppUpdate": true
   }
 }
 EOF
-  echo "-- Added no selfupdate policy to Thunderbird."
+    echo "-- Added no selfupdate policy to Thunderbird."
+  fi
 fi
 
-if [ -d  /Applications/Firefox.app ];
+if [[ -d  /Applications/Firefox.app ]];
 then
-  mkdir -p  /Applications/Firefox.app/Contents/Resources/distribution;
-  cat > /Applications/Firefox.app/Contents/Resources/distribution/policies.json << EOF
+  # Check if Software is also installed through brew when disableing self-update function.
+  # shellcheck disable=SC2034
+  IS_FF_INSTALLED=$(brew list --casks | grep firefox);
+  IS_FF_INSTALLED_RC=$?;
+  if [[ ${IS_FF_INSTALLED_RC} -eq 0 ]];
+  then
+    mkdir -p  /Applications/Firefox.app/Contents/Resources/distribution;
+    cat > /Applications/Firefox.app/Contents/Resources/distribution/policies.json << EOF
 {
   "policies": {
     "DisableAppUpdate": true
   }
 }
 EOF
-  echo "-- Added no selfupdate policy to Firefox."
+    echo "-- Added no selfupdate policy to Firefox."
+  fi
 fi
 
 echo "";
 echo "";
-
-
-
 
