@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # FILENAME:    ~/bin/brew-update.sh
-# VERSION:     2025-12-08_13-00
+# VERSION:     2026-03-03_09-00
 # LICENSE:     WTFPL
 # DESCRIPTION: Script that "properly" Updates libreoffice with brew/mac without
 #              breaking the libreoffice-language-pack.
@@ -10,6 +10,7 @@
 #              a proper package manager like Debian with dpkg/apt and not use shitty/
 #              proprietary operating systems. ;-)
 # CHANGELOG:
+#  * 2026-03-03_09-00: Ignore dependencies when removing libreoffice including language-pack
 #  * 2025-12-08_13-00: refactoring dependency fix, fix deprecation and add additional check
 #    * fix libreoffice update (dependency fix and --no-quarantine deprecation)
 #    * check if firefox/thunderbird is installed through brew (only then stop
@@ -79,11 +80,11 @@ then
         echo "==> A LibreOffice update is available. :-)";
 
         # uninstall libreoffice (first the language pack because of dependencies
-        echo " brew uninstall --cask libreoffice-language-pack";
-        brew uninstall --cask libreoffice-language-pack;
+        echo " brew uninstall --cask --ignore-dependencies libreoffice-language-pack";
+        brew uninstall --cask --ignore-dependencies libreoffice-language-pack;
 
-        echo " brew uninstall --cask libreoffice";
-        brew uninstall --cask libreoffice;
+        echo " brew uninstall --cask --ignore-dependencies libreoffice";
+        brew uninstall --cask --ignore-dependencies libreoffice;
 
 
         # installieren
